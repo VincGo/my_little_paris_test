@@ -1,9 +1,9 @@
 <template>
   <div v-if="state.step === 1">
-    <ChoosePillow :nextStep="nextStep"/>
+    <ChoosePillow :nextStep="nextStep" :choiceUp="choiceUp" :choiceDown="choiceDown"  :choice="state.choice"/>
   </div>
   <div v-if="state.step === 2">
-    <PersonalData :state="state" :prevStep="prevStep"/>
+    <PersonalData :prevStep="prevStep"/>
   </div>
 </template>
 
@@ -32,10 +32,20 @@ export default {
       state.step--
     }
 
+    function choiceUp() {
+      state.choice++
+    }
+
+    function choiceDown() {
+      state.choice--
+    }
+
     return {
       state,
       nextStep,
-      prevStep
+      prevStep,
+      choiceUp,
+      choiceDown
     }
   }
 }
