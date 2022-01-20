@@ -2,7 +2,7 @@
   <div>
     <Title title="Combien d'oreiller dans votre vie ?" />
     <img  :src="require(`@/assets/coussins/${choice}.png`)" alt="test">
-    <button @click="choiceDown"  v-if="choice > 1">-</button>
+    <button @click="choiceDown" v-if="choice > 1">-</button>
     <span>{{choice}}</span>
     <button @click="choiceUp" v-if="choice < 10">+</button>
     <button @click="nextStep">Suivant</button>
@@ -22,12 +22,6 @@ export default {
     choiceDown: Function,
     choice: Number
   },
-
-  setup() {
-
-    return {
-    }
-  }
 }
 </script>
 
