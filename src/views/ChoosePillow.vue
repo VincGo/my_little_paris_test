@@ -1,10 +1,19 @@
 <template>
-  <h1>Hello</h1>
+  <button @click="nextStep">Suivant</button>
 </template>
 
 <script>
+
 export default {
-  name: "ChoosePillow"
+  name: "ChoosePillow",
+  props: {
+    nextStep: Function
+  },
+
+  setup() {
+
+    return {}
+  }
 }
 </script>
 

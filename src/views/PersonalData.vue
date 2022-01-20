@@ -1,19 +1,22 @@
 <template>
   <div>
-    <h1>Données personnelles</h1>
+    <button @click="prevStep">Retour</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PersonalData"
+  name: "PersonalData",
+  props: {
+    prevStep: Function
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-  div{
-    h1{
-      color: red;
-    }
+div {
+  h1 {
+    color: red;
   }
+}
 </style>
