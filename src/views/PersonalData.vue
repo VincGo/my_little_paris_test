@@ -7,6 +7,14 @@
           <font-awesome-icon icon="angle-left" />
           <span>retour</span>
         </div>
+        <p v-if="errors.length">
+          Veuillez corriger les erreurs suivantes:
+        </p>
+        <ul class="errors">
+          <li v-for="(error, index) in errors" :key="index">
+            {{error}}
+          </li>
+        </ul>
         <div class="form-container">
           <label>Email</label>
           <input class="input" type="email" name="email" @change="getData">
@@ -22,7 +30,7 @@
       </div>
     </form>
     <div>
-      <button class="btn-step btn-orange-outline" @click="send">Enregistrer</button>
+      <button class="btn-step btn-orange-outline" @click="checkForm">Enregistrer</button>
     </div>
   </div>
 </template>
@@ -41,7 +49,8 @@ export default {
   props: {
     toggleStep: Function,
     handleChange: Function,
-    send: Function
+    checkForm: Function,
+    errors: Array
   },
 
   setup(props) {
@@ -62,12 +71,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .form-container {
-    margin-bottom: 15px;
-  }
+
 </style>

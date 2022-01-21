@@ -15,6 +15,10 @@ body {
   overflow: hidden;
 }
 
+.form-container {
+  margin-bottom: 15px;
+}
+
 .color-orange {
   color: var(--orange);
 }
@@ -31,10 +35,16 @@ body {
 }
 
 .btn-choice {
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  font-size: 25px;
+  border: none;
+  background: transparent;
+  svg {
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
+
+.color-white {
+  color: white;
 }
 
 .btn-orange-outline {
@@ -66,14 +76,23 @@ body {
   }
 }
 
+.errors {
+  padding-left: 15px;
+  li {
+    list-style: none;
+  }
+}
+
+/* Transition entre les deux components*/
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
+
 .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
+
+.slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }

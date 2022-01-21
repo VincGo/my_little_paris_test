@@ -4,7 +4,7 @@
       <ChoosePillow :toggleStep="toggleStep" :choiceUp="choiceUp" :choiceDown="choiceDown" :choice="state.choice"/>
     </div>
     <div v-else>
-      <PersonalData :toggleStep="toggleStep" :handleChange="handleChange" :send="send"/>
+      <PersonalData :toggleStep="toggleStep" :handleChange="handleChange" :checkForm="checkForm" :errors="errors"/>
     </div>
   </FadeTransition>
 </template>
@@ -13,18 +13,19 @@
 import ChoosePillow from "@/views/ChoosePillow";
 import PersonalData from "@/views/PersonalData";
 import {reactive, ref} from "vue";
-import crud from "@/services/crud";
 import FadeTransition from "@/components/FadeTransition";
+import {post} from "@/services/crud";
 
 export default {
   name: "StepForm",
   components: {FadeTransition, PersonalData, ChoosePillow},
   setup() {
-    const step = ref(true)
+    const step = ref(1)
+    let errors = ref([])
     const state = reactive({
       choice: 1,
-      email: "",
-      birthDate: "",
+      email: null,
+      birthDate: null,
       optIn: false
     })
 
@@ -33,11 +34,15 @@ export default {
     }
 
     function choiceUp() {
-      state.choice++
+      if(state.choice < 10) {
+        state.choice++
+      }
     }
 
     function choiceDown() {
-      state.choice--
+      if(state.choice > 1) {
+        state.choice--
+      }
     }
 
     function handleChange(name, value) {
@@ -45,13 +50,36 @@ export default {
       console.log(name, state[name])
     }
 
+    function checkForm() {
+      this.errors = []
+
+      if (!state.birthDate) {
+        this.errors.push("La date de naissance est requise.")
+      }
+
+      if (!state.email) {
+        this.errors.push("L'email est requis.")
+      } else if (!validateEmail(state.email)) {
+        this.errors.push("Veuillez renseigner un email valide")
+      }
+
+      if (!this.errors.length) {
+        send
+      }
+    }
+
+    function validateEmail(email) {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
     function send() {
-      crud.post(state)
+      post(state)
           .then(() => console.log("success"))
           .catch(err => console.log(err))
     }
 
-    return {step, state, toggleStep, choiceUp, choiceDown, handleChange, send}
+    return {step, state, errors,toggleStep, choiceUp, choiceDown, handleChange, checkForm}
   }
 }
 </script>
