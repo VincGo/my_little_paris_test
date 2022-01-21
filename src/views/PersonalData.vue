@@ -1,17 +1,37 @@
 <template>
-  <div>
+  <div class="container">
     <Title title="Informations personnelles"/>
-    <form action="">
-      <input type="email" placeholder="E-mail" name="email" @change="getData">
-      <input type="date" name="birthDate" @change="getData">
-      <input type="checkbox" name="optIn" @change="check">
+    <form>
+      <div>
+        <div class="return" @click="toggleStep">
+          <font-awesome-icon icon="angle-left" />
+          <span>retour</span>
+        </div>
+        <div class="form-container">
+          <label>Email</label>
+          <input class="input" type="email" name="email" @change="getData">
+        </div>
+        <div class="form-container">
+          <label>Date de naissance</label>
+          <input class="input" type="date" name="birthDate" @change="getData">
+        </div>
+        <div>
+          <input type="checkbox" name="optIn" @change="check">
+          <label>Je souhaite recevoir des newsletter</label>
+        </div>
+      </div>
     </form>
-    <button @click="prevStep">Retour</button>
-    <button @click="send">Enregistrer</button>
+    <div>
+      <button class="btn-step btn-orange-outline" @click="send">Enregistrer</button>
+    </div>
   </div>
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faAngleLeft)
 
 import Title from "@/components/Title";
 
@@ -19,7 +39,7 @@ export default {
   name: "PersonalData",
   components: {Title},
   props: {
-    prevStep: Function,
+    toggleStep: Function,
     handleChange: Function,
     send: Function
   },
@@ -42,4 +62,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .form-container {
+    margin-bottom: 15px;
+  }
 </style>

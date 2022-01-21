@@ -1,10 +1,12 @@
 <template>
-  <div v-if="step === 1">
-    <ChoosePillow :nextStep="nextStep" :choiceUp="choiceUp" :choiceDown="choiceDown"  :choice="state.choice"/>
-  </div>
-  <div v-if="step === 2">
-    <PersonalData :prevStep="prevStep" :handleChange="handleChange" :send="send"/>
-  </div>
+  <FadeTransition mode="out-in">
+    <div v-if="step">
+      <ChoosePillow :toggleStep="toggleStep" :choiceUp="choiceUp" :choiceDown="choiceDown" :choice="state.choice"/>
+    </div>
+    <div v-else>
+      <PersonalData :toggleStep="toggleStep" :handleChange="handleChange" :send="send"/>
+    </div>
+  </FadeTransition>
 </template>
 
 <script>
@@ -12,12 +14,13 @@ import ChoosePillow from "@/views/ChoosePillow";
 import PersonalData from "@/views/PersonalData";
 import {reactive, ref} from "vue";
 import crud from "@/services/crud";
+import FadeTransition from "@/components/FadeTransition";
 
 export default {
   name: "StepForm",
-  components: {PersonalData, ChoosePillow},
+  components: {FadeTransition, PersonalData, ChoosePillow},
   setup() {
-    const step = ref(1)
+    const step = ref(true)
     const state = reactive({
       choice: 1,
       email: "",
@@ -25,12 +28,8 @@ export default {
       optIn: false
     })
 
-    function nextStep() {
-      step.value++
-    }
-
-    function prevStep() {
-      step.value--
+    function toggleStep() {
+      step.value = !step.value
     }
 
     function choiceUp() {
@@ -48,11 +47,11 @@ export default {
 
     function send() {
       crud.post(state)
-      .then(() => console.log("success"))
-      .catch(err => console.log(err))
+          .then(() => console.log("success"))
+          .catch(err => console.log(err))
     }
 
-    return {step, state, nextStep, prevStep, choiceUp, choiceDown, handleChange, send}
+    return {step, state, toggleStep, choiceUp, choiceDown, handleChange, send}
   }
 }
 </script>

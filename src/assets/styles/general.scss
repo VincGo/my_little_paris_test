@@ -1,0 +1,79 @@
+:root {
+  --rose: #f7add7;
+  --orange: #d36131;
+}
+
+body {
+  background-color: var(--rose);
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  justify-items: center;
+  margin: 0 10px;
+  overflow: hidden;
+}
+
+.color-orange {
+  color: var(--orange);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.btn-step {
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.btn-choice {
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+}
+
+.btn-orange-outline {
+  border: 2px solid var(--orange);
+  background: white;
+  color: var(--orange);
+  cursor: pointer;
+}
+
+.input {
+  border: none;
+  border-radius: 5px;
+  padding: 7px;
+  background: var(--orange);
+  color: white;
+  display: block;
+}
+
+.return {
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  svg, span {
+    color: var(--orange);
+  }
+
+  svg {
+    margin-right: 5px;
+  }
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
