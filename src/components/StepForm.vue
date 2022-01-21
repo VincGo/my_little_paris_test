@@ -14,13 +14,13 @@ import ChoosePillow from "@/views/ChoosePillow";
 import PersonalData from "@/views/PersonalData";
 import {reactive, ref} from "vue";
 import FadeTransition from "@/components/FadeTransition";
-import {post} from "@/services/crud";
+import crud from "@/services/crud";
 
 export default {
   name: "StepForm",
   components: {FadeTransition, PersonalData, ChoosePillow},
   setup() {
-    const step = ref(1)
+    const step = ref(true)
     let errors = ref([])
     const state = reactive({
       choice: 1,
@@ -64,19 +64,15 @@ export default {
       }
 
       if (!this.errors.length) {
-        send
+        crud.post(state)
+            .then(() => console.log("success"))
+            .catch(err => console.log(err))
       }
     }
 
     function validateEmail(email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
-    }
-
-    function send() {
-      post(state)
-          .then(() => console.log("success"))
-          .catch(err => console.log(err))
     }
 
     return {step, state, errors,toggleStep, choiceUp, choiceDown, handleChange, checkForm}

@@ -10,8 +10,17 @@ const crud = {
     } catch (err) {
       console.error(err)
     }
-  }
+  },
 
+  async get () {
+    try {
+      const response = await axios
+        .get("https://61bb0826e943920017784bb1.mockapi.io/api/v1/suscribers")
+      return response.data
+    } catch (err) {
+      console.error(err)
+    }
+  },
 }
 
 export default crud
